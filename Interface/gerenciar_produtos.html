@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Produtos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <!-- Botão para cadastrar produto -->
+            <button id="cadastrarProdutoBtn" class="btn">Cadastrar Produto</button>
+        </header>
+
+        <!-- Tabela para exibição dos produtos -->
+        <table id="produtosTable">
+            <thead>
+                <tr>
+                    <th>Produto</th>
+                    <th>Categoria</th>
+                    <th>Preço</th>
+                    <th>Estoque</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Produtos serão listados aqui -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Exemplo de lista de produtos com os campos completos
+        const produtos = [
+            { 
+                id: 1, 
+                nome: 'Produto 1', 
+                descricao: 'Descrição do Produto 1', 
+                codigo_barras: '1234567890123', 
+                preco_venda: 'R$5,40', 
+                preco_custo: 'R$3,00', 
+                categoria: 'Bebida', 
+                quantidade: 17 
+            },
+            { 
+                id: 2, 
+                nome: 'Produto 2', 
+                descricao: 'Descrição do Produto 2', 
+                codigo_barras: '1234567890124', 
+                preco_venda: 'R$6,99', 
+                preco_custo: 'R$4,50', 
+                categoria: 'Bebida', 
+                quantidade: 23 
+            }
+        ];
+
+         // Função para carregar os produtos na tabela
+        function carregarProdutos() {
+            const tbody = document.querySelector('#produtosTable tbody');
+            tbody.innerHTML = ''; // Limpa a tabela antes de adicionar os dados
+
+            produtos.forEach(produto => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${produto.nome}</td>
+                    <td>${produto.categoria}</td>
+                    <td>${produto.preco_venda}</td>
+                    <td>${produto.quantidade}</td>
+                    <td>
+                        <button onclick="editarProduto(${produto.id})">Editar</button>
+                        <button onclick="deletarProduto(${produto.id})">Deletar</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Função para editar o produto
+        function editarProduto(id) {
+            alert('Editar produto com id: ' + id);
+            // Redirecionar para a tela de edição ou abrir um modal
+        }
+
+        // Função para deletar o produto
+        function deletarProduto(id) {
+            if (confirm('Tem certeza que deseja excluir este produto?')) {
+                // Aqui você pode chamar sua API para deletar o produto no backend
+                alert('Produto deletado com id: ' + id);
+                // Lógica para remover o produto da lista (ou chamar backend para deletar)
+                // Exemplo: produtos = produtos.filter(p => p.id !== id);
+                carregarProdutos(); // Atualiza a tabela após a exclusão
+            }
+        }
+
+        // Ao carregar a página, lista os produtos
+        window.onload = carregarProdutos;
+
+        // Botão para cadastrar novo produto
+        document.getElementById('cadastrarProdutoBtn').addEventListener('click', () => {
+            window.location.href = 'cadastro_produtos.html'; // Redireciona para a página de cadastro
+        });
+    </script>
+</body>
+</html>
